@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MovieTime</string>
+    <string name="login_txt">Welcome to MovieTime!</string>
+    <string name="password_placeholder">Password</string>
+    <string name="username_placeholder">Username</string>
+    <string name="login_button_txt">Login/Register</string>
+
+</resources>
