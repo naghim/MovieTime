@@ -15,7 +15,7 @@ public class Model {
         @SerializedName("budget")
         public int budget;
         @SerializedName("gender_ids")
-        public List<Integer> gender_ids = null;
+        public List<Object> gender_ids = null;
         @SerializedName("homepage")
         public String homepage;
         @SerializedName("id")
@@ -51,7 +51,7 @@ public class Model {
         @SerializedName("vote_count")
         public int voteCount;
 
-        public Model(boolean adult, String backdropPath, int budget, List<Integer> gender_ids, String homepage, int id, String imdbId, String originalLanguage, String originalTitle, String overview, float popularity, String posterPath, String releaseDate, int revenue, int runtime, String status, String tagline, String title, boolean video, float voteAverage, int voteCount) {
+        public Model(boolean adult, String backdropPath, int budget, List<Object> gender_ids, String homepage, int id, String imdbId, String originalLanguage, String originalTitle, String overview, float popularity, String posterPath, String releaseDate, int revenue, int runtime, String status, String tagline, String title, boolean video, float voteAverage, int voteCount) {
                 this.adult = adult;
                 this.backdropPath = backdropPath;
                 this.budget = budget;
@@ -99,11 +99,11 @@ public class Model {
                 this.budget = budget;
         }
 
-        public List<Integer> getGender_ids() {
+        public List<Object> getGender_ids() {
                 return gender_ids;
         }
 
-        public void setGender_ids(List<Integer> gender_ids) {
+        public void setGender_ids(List<Object> gender_ids) {
                 this.gender_ids = gender_ids;
         }
 

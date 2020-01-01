@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +19,8 @@ import java.nio.charset.Charset;
 public class LoginFragment extends Fragment {
 
     private EditText mPasswordEditText;
-    private EditText mUsernameEditText ;
+    private EditText mUsernameEditText;
+    private Button mLoginButton;
     private DatabaseHelper database;
 
     @Override
@@ -27,9 +29,18 @@ public class LoginFragment extends Fragment {
 
         mPasswordEditText = view.findViewById(R.id.passwordEditText);
         mUsernameEditText = view.findViewById(R.id.userNameEditText);
+        mLoginButton = view.findViewById(R.id.loginButton);
         database = new DatabaseHelper(getContext());
 
-        logUserIn();
+        ((MainActivity)getActivity()).bottomNav.setVisibility(View.GONE);
+
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                logUserIn();
+            }});
+
         return view;
     }
 

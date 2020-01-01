@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_recents"
+        android:id="@+id/nav_favourites"
         android:enabled="true"
         android:icon="@drawable/ic_action_favorites"
         android:title="Favourites"
          />
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/nav_home"
         android:enabled="true"
         android:icon="@drawable/ic_action_topten"
         android:title="Home"
          />
     <item
-        android:id="@+id/action_nearby"
+        android:id="@+id/nav_nowplaying"
         android:enabled="true"
         android:icon="@drawable/ic_action_nowplaying"
         android:title="Now playing"

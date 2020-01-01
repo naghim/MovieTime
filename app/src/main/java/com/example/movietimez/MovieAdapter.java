@@ -17,9 +17,14 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHolder> {
     private List<Model> mMovieRecyclerList;
     private Context context;
+    private OnItemClickListener mOnItemClickListener;
 
-    public void setmMovieRecyclerList(List<Model> mMovieRecyclerList) {
+    public void setMovieRecyclerList(List<Model> mMovieRecyclerList) {
         this.mMovieRecyclerList = mMovieRecyclerList;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mOnItemClickListener = listener;
     }
 
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -30,13 +35,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
         public TextView txtDescription;
         public ImageView coverImage;
 
-        public CustomViewHolder(@NonNull View itemView) {
+        public CustomViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             mView = itemView;
 
             txtTitle = mView.findViewById(R.id.title);
             txtDescription = mView.findViewById(R.id.description);
             coverImage = mView.findViewById(R.id.coverImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ( listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(v,position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -48,7 +65,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_row_item, parent, false);
-        CustomViewHolder rvh = new CustomViewHolder(view);
+        CustomViewHolder rvh = new CustomViewHolder(view, mOnItemClickListener);
         return rvh;
     }
 

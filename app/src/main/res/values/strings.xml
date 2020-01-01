@@ -4,5 +4,11 @@
     <string name="password_placeholder">Password</string>
     <string name="username_placeholder">Username</string>
     <string name="login_button_txt">Login/Register</string>
+    <string name="genres_header">Release Date</string>
+    <string name="overview_header">Overview</string>
+    <string name="duration_header">Average Score</string>
+    <string name="language_header">Language</string>
+    <string name="add_to_favs_button">Add to favourites!</string>
+    <string name="title_header">Title</string>
 
 </resources>
