@@ -10,5 +10,13 @@
     <string name="language_header">Language</string>
     <string name="add_to_favs_button">Add to favourites!</string>
     <string name="title_header">Title</string>
+    <string name="changeProfilePicButton">Change profile picture</string>
+    <string name="password_profile">Sssh! It\'s a secret!</string>
+    <string name="password_header_profile">Password</string>
+    <string name="username_header_profile">Username</string>
+    <string name="changePasswordButton">Change password</string>
+    <string name="changePassword">Change your password</string>
+    <string name="oldpassword_placeholder">Old password</string>
+    <string name="newpassword_placeholder">New password</string>
 
 </resources>

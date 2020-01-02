@@ -1,25 +1,26 @@
 package com.example.movietimez;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
+import com.example.movietimez.Fragments.ChangePassword;
+import com.example.movietimez.Fragments.CinemaFragment;
+import com.example.movietimez.Fragments.HomeFragment;
+import com.example.movietimez.Fragments.LoginFragment;
+import com.example.movietimez.Fragments.MovieFragment;
+import com.example.movietimez.Fragments.ProfileFragment;
+import com.example.movietimez.Models.Model;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fm;
-    BottomNavigationView bottomNav;
+    public BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +41,16 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
 
                 switch (item.getItemId()) {
+                    case R.id.nav_profile:
+                        selectedFragment = new ProfileFragment();
+                        break;
                     case R.id.nav_favourites:
-                        selectedFragment = new FavouritesFragment();
+                        selectedFragment = new HomeFragment();
+                        Constants.SELECTED_OPTION = Constants.FAVS;
                         break;
                     case R.id.nav_home:
                         selectedFragment = new HomeFragment();
+                        Constants.SELECTED_OPTION = Constants.HOME;
                         break;
                     case R.id.nav_nowplaying:
                         selectedFragment = new CinemaFragment();
@@ -70,6 +76,22 @@ public class MainActivity extends AppCompatActivity {
         Constants.SELECTED_MOVIE = model;
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragment_place, new MovieFragment());
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void changePassword() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_place, new ChangePassword());
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void loadProfile() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_place, new ProfileFragment());
         ft.addToBackStack(null);
         ft.commit();
     }

@@ -5,4 +5,5 @@
     <dimen name="itemImageHeight">400dp</dimen>
     <dimen name="itemPopularityHeight">30dp</dimen>
     <dimen name="detailPosterHeight">250dp</dimen>
+    <dimen name="profilePosterHeight">250dp</dimen>
 </resources>
