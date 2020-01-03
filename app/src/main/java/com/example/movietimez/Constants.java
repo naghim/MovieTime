@@ -11,8 +11,10 @@ public class Constants {
 
     public static Model SELECTED_MOVIE = null;
     public static String SELECTED_OPTION = "HOME";
+    public static String SEARCH = "SEARCH";
     public static String FAVS = "FAVS";
     public static String HOME = "HOME";
     public static String USERNAME = "TEST";
+    public static String SEARCH_REQUEST = "DRAGONS";
 
 }

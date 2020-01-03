@@ -71,7 +71,7 @@ public class MovieFragment extends Fragment {
             }});
 
 
-        if (Constants.SELECTED_OPTION == Constants.FAVS)
+        if (Constants.SELECTED_OPTION == Constants.FAVS || Constants.SELECTED_OPTION == Constants.SEARCH)
         {
             mFavsButton.setVisibility(View.INVISIBLE);
         } else {

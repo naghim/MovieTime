@@ -18,5 +18,7 @@
     <string name="changePassword">Change your password</string>
     <string name="oldpassword_placeholder">Old password</string>
     <string name="newpassword_placeholder">New password</string>
+    <string name="search_hint">Search movies...</string>
+    <string name="action_search">Search movies...</string>
 
 </resources>

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -41,12 +42,14 @@ public class HomeFragment extends Fragment {
     private RecyclerView mMovieRecylerView;
     private Context mContext;
     private DatabaseHelper database = null;
+    private EditText mSearchBar;
 
     private String TAG = "HOMEFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.homescreen_topten, parent, false);
+        mSearchBar = view.findViewById(R.id.toolbar);
 
         this.createRecycleList();
         this.mContext = getContext();
@@ -64,6 +67,35 @@ public class HomeFragment extends Fragment {
         if (Constants.SELECTED_OPTION == Constants.FAVS){
             this.getFavourites();
         }
+        if (Constants.SELECTED_OPTION == Constants.SEARCH){
+            this.getSearchedMovies();
+        }
+    }
+
+    private void getSearchedMovies() {
+        if (Constants.SEARCH_REQUEST.equals("")) return;
+        movieRecyclerList.clear();
+        Log.d(TAG, "IN SEARCHED MOVIES ----- query is : " + Constants.SEARCH_REQUEST);
+        HttpApiService service = RetrofitClientInstance.getRetrofitInstance().create(HttpApiService.class);
+
+        Call<RetroMovie> call = service.searchMovie(Constants.API_KEY, Constants.SEARCH_REQUEST );
+        call.enqueue(new Callback<RetroMovie>() {
+            @Override
+            public void onResponse(Call<RetroMovie> call, Response<RetroMovie> response) {
+
+                movieRecyclerList = response.body().getResults();
+
+                mMovieAdapter.setMovieRecyclerList(movieRecyclerList);
+                mMovieAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onFailure(Call<RetroMovie> call, Throwable t) {
+                // if the query doesn't succeed...
+                //Toast.makeText(getContext(),"Couldn't load the movies.",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void getFavourites()

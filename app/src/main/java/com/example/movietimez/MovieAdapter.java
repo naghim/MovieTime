@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.movietimez.Interfaces.OnItemClickListener;
 import com.example.movietimez.Models.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHolder> {
@@ -79,14 +81,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
 
         holder.txtTitle.setText(currentItem.getTitle());
         holder.txtDescription.setText(currentItem.getOverview());
-
-
-        //Picasso.Builder builder = new Picasso.Builder(context);
-//        builder.downloader(new OkHttp3Downloader(context));
-//        builder.build().load(dataList.get(position).getThumbnailUrl())
-//                .placeholder((R.drawable.ic_launcher_background))
-//                .error(R.drawable.ic_launcher_background)
-//                .into(holder.coverImage);
     }
 
     @Override

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.movietimez.Fragments.ChangePassword;
 import com.example.movietimez.Fragments.CinemaFragment;
@@ -92,6 +93,17 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragment_place, new ProfileFragment());
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void onSearchButtonClicked(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        Constants.SELECTED_OPTION = Constants.SEARCH;
+        EditText toolbar = findViewById(R.id.toolbar);
+        Constants.SEARCH_REQUEST = toolbar.getText().toString();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_place, new HomeFragment());
         ft.addToBackStack(null);
         ft.commit();
     }
