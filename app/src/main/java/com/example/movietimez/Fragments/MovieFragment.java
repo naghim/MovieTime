@@ -1,21 +1,50 @@
 package com.example.movietimez.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.movietimez.Constants;
 import com.example.movietimez.DatabaseHelper;
+import com.example.movietimez.Interfaces.HttpApiService;
+import com.example.movietimez.Interfaces.OnItemClickListener;
+import com.example.movietimez.MainActivity;
 import com.example.movietimez.Models.Model;
+import com.example.movietimez.Models.RetroMovie;
+import com.example.movietimez.Models.Video;
+import com.example.movietimez.Models.VideoResponse;
+import com.example.movietimez.MovieAdapter;
 import com.example.movietimez.R;
+import com.example.movietimez.RelatedContentAdapter;
+import com.example.movietimez.RetrofitClientInstance;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.provider.MediaStore.Video.Thumbnails.VIDEO_ID;
 
 public class MovieFragment extends Fragment {
 
@@ -29,6 +58,16 @@ public class MovieFragment extends Fragment {
     private Button mFavsButton;
     private DatabaseHelper database = null;
 
+    private YouTubePlayerFragment playerFragment;
+    private YouTubePlayer mPlayer;
+
+    private List<Model> movieRecyclerList;
+    private RelatedContentAdapter mMovieAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView mMovieRecylerView;
+
+    List<Video> videoList = new ArrayList<Video>();
+
 
     @Nullable
     @Override
@@ -36,6 +75,7 @@ public class MovieFragment extends Fragment {
         this.selectedMovie = Constants.SELECTED_MOVIE;
         final View view = inflater.inflate(R.layout.movie_details, container, false);
         database = new DatabaseHelper(getContext());
+
         buildDetailedView(view);
 
         return view;
@@ -78,5 +118,82 @@ public class MovieFragment extends Fragment {
             mFavsButton.setVisibility(View.VISIBLE);
         }
 
+        getVideo();
+
+
+        this.createRecycleList();
+        this.buildRecycleView(view);
+
+    }
+
+    private void buildRecycleView(View view) {
+        mMovieRecylerView = view.findViewById(R.id.related_content);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+
+        mMovieRecylerView.setHasFixedSize(true);
+
+        mMovieAdapter = new RelatedContentAdapter(getContext(), this.movieRecyclerList);
+        mMovieRecylerView.setAdapter(mMovieAdapter);
+        mMovieRecylerView.setLayoutManager(mLayoutManager);
+
+
+        mMovieAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view , int position) {
+                ((MainActivity)getActivity()).onMovieClicked(view, movieRecyclerList.get(position));
+            }
+        });
+    }
+
+    private void createRecycleList() {
+        movieRecyclerList = Constants.RELATED_CONTENT;
+    }
+
+    private void getVideo() {
+        HttpApiService service = RetrofitClientInstance.getRetrofitInstance().create(HttpApiService.class);
+
+        Call<VideoResponse> call = service.getVideos(Constants.SELECTED_MOVIE.getId(), Constants.API_KEY);
+        call.enqueue(new Callback<VideoResponse>() {
+            @Override
+            public void onResponse(Call<VideoResponse> call, Response<VideoResponse> response) {
+                videoList.clear();
+                videoList = response.body().getResults();
+
+                if (videoList.isEmpty()) return;
+
+                YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+
+                // it shows an error, but it can run... Youtube api wasn't updated with the new androidx library...
+                transaction.add(R.id.youtube_player_fragment, youTubePlayerFragment).commit();
+
+
+                youTubePlayerFragment.initialize(Constants.YT_API_KEY, new YouTubePlayer.OnInitializedListener() {
+
+                    @Override
+                    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
+                        if (!wasRestored) {
+                            player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                            player.loadVideo(videoList.get(0).getKey());
+                            player.play();
+                        }
+                    }
+
+                    @Override
+                    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult error) {
+                        // YouTube error
+                        String errorMessage = error.toString();
+                        Log.d("errorMessage:", errorMessage);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(Call<VideoResponse> call, Throwable t) {
+                // if the query doesn't succeed...
+                Toast.makeText(getContext(), "Couldn't load the movies.", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

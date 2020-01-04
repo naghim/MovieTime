@@ -153,6 +153,7 @@ public class HomeFragment extends Fragment {
                 Constants.PAGE = response.body().getPage();
 
                 mMovieAdapter.setMovieRecyclerList(movieRecyclerList);
+                Constants.RELATED_CONTENT = movieRecyclerList;
                 mMovieAdapter.notifyDataSetChanged();
 
             }

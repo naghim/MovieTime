@@ -20,5 +20,7 @@
     <string name="newpassword_placeholder">New password</string>
     <string name="search_hint">Search movies...</string>
     <string name="action_search">Search movies...</string>
+    <string name="relatedContentHeader">Releated content</string>
+    <string name="trailerHeader">Trailer</string>
 
 </resources>

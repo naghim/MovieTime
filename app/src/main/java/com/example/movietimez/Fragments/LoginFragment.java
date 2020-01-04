@@ -61,6 +61,12 @@ public class LoginFragment extends Fragment {
         if (!database.userExists(username, hashCode.toString()))
         {
             database.saveUser(username, hashCode.toString());
+        } else
+        {
+            if(!database.verifyUserInput(username, hashCode.toString())){
+                Toast.makeText(getContext(), "Invalid login inputs...", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         Constants.USERNAME = username;

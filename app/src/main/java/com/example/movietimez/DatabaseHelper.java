@@ -110,6 +110,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean verifyUserInput(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor res = db.rawQuery("select * from "+ USERS_TABLE +" where username = ? and password =? ",
+                new String[]{username, password});
+
+        if(res.getCount() == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void saveProfilePicture(String username, Uri data) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
