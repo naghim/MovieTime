@@ -10,19 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.movietimez.Constants;
-import com.example.movietimez.DatabaseHelper;
-import com.example.movietimez.MainActivity;
+import com.example.movietimez.HelperClasses.Constants;
+import com.example.movietimez.HelperClasses.DatabaseHelper;
+import com.example.movietimez.Activities.MainActivity;
 import com.example.movietimez.R;
-import com.google.common.hash.HashCode;
-import com.google.common.hash.Hashing;
-
-import java.nio.charset.Charset;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -73,7 +68,6 @@ public class ProfileFragment extends Fragment {
 
     private void changePassword() {
         ((MainActivity)getActivity()).changePassword();
-        //final HashCode hashCode = Hashing.sha1().hashString(password, Charset.defaultCharset());
     }
 
     private void changePicture() {

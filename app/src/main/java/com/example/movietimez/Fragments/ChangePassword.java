@@ -12,10 +12,9 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
-import com.example.movietimez.Constants;
-import com.example.movietimez.DatabaseHelper;
-import com.example.movietimez.MainActivity;
+import com.example.movietimez.HelperClasses.Constants;
+import com.example.movietimez.HelperClasses.DatabaseHelper;
+import com.example.movietimez.Activities.MainActivity;
 import com.example.movietimez.R;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
@@ -29,6 +28,13 @@ public class ChangePassword extends Fragment {
     private Button mChangePassword;
     private DatabaseHelper database = null;
 
+    /**
+     * On create
+     * @param inflater
+     * @param parent
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.change_password, parent, false);
@@ -42,6 +48,9 @@ public class ChangePassword extends Fragment {
         return view;
     }
 
+    /**
+     * Change password: verify old password and change password. Otherwise show toast about it.
+     */
     private void changePassword() {
         Cursor userData = this.database.findUserByUsername(Constants.USERNAME);
 

@@ -1,7 +1,5 @@
 package com.example.movietimez.Models;
 
-import com.example.movietimez.Models.Model;
-
 import java.util.List;
 
 public class VideoResponse {

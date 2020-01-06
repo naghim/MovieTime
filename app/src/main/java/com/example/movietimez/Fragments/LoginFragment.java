@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.movietimez.Constants;
-import com.example.movietimez.DatabaseHelper;
-import com.example.movietimez.MainActivity;
+import com.example.movietimez.HelperClasses.Constants;
+import com.example.movietimez.HelperClasses.DatabaseHelper;
+import com.example.movietimez.Activities.MainActivity;
 import com.example.movietimez.R;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
@@ -27,6 +26,13 @@ public class LoginFragment extends Fragment {
     private Button mLoginButton;
     private DatabaseHelper database;
 
+    /**
+     * On create
+     * @param inflater
+     * @param parent
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.login_fragment, parent, false);
@@ -48,6 +54,9 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Log user in.
+     */
     private void logUserIn()
     {
         //if user exists --> log in

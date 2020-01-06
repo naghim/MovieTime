@@ -17,25 +17,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.movietimez.Constants;
-import com.example.movietimez.DatabaseHelper;
+import com.example.movietimez.HelperClasses.Constants;
+import com.example.movietimez.HelperClasses.DatabaseHelper;
 import com.example.movietimez.Interfaces.HttpApiService;
 import com.example.movietimez.Interfaces.OnItemClickListener;
-import com.example.movietimez.MainActivity;
-import com.example.movietimez.Models.Model;
-import com.example.movietimez.Models.RetroMovie;
+import com.example.movietimez.Activities.MainActivity;
+import com.example.movietimez.Models.Movie;
 import com.example.movietimez.Models.Video;
 import com.example.movietimez.Models.VideoResponse;
-import com.example.movietimez.MovieAdapter;
 import com.example.movietimez.R;
-import com.example.movietimez.RelatedContentAdapter;
-import com.example.movietimez.RetrofitClientInstance;
-import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.example.movietimez.Adapters.RelatedContentAdapter;
+import com.example.movietimez.HelperClasses.RetrofitClientInstance;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,11 +40,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.provider.MediaStore.Video.Thumbnails.VIDEO_ID;
-
 public class MovieFragment extends Fragment {
 
-    private Model selectedMovie = null;
+    private Movie selectedMovie = null;
     private TextView mTitleTextView;
     private TextView mGenreTextView;
     private TextView mLanguageTextView;
@@ -61,7 +55,7 @@ public class MovieFragment extends Fragment {
     private YouTubePlayerFragment playerFragment;
     private YouTubePlayer mPlayer;
 
-    private List<Model> movieRecyclerList;
+    private List<Movie> movieRecyclerList;
     private RelatedContentAdapter mMovieAdapter;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView mMovieRecylerView;
@@ -107,11 +101,12 @@ public class MovieFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "Added to favourites...", Toast.LENGTH_SHORT).show();
                 database.addToFavourites(selectedMovie.id, Constants.USERNAME);
             }});
 
 
-        if (Constants.SELECTED_OPTION == Constants.FAVS || Constants.SELECTED_OPTION == Constants.SEARCH)
+        if (Constants.SELECTED_OPTION == Constants.FAVS)
         {
             mFavsButton.setVisibility(View.INVISIBLE);
         } else {
@@ -119,8 +114,6 @@ public class MovieFragment extends Fragment {
         }
 
         getVideo();
-
-
         this.createRecycleList();
         this.buildRecycleView(view);
 
