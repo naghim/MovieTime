@@ -14,10 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.movietimez.HelperClasses.Constants;
 import com.example.movietimez.HelperClasses.DatabaseHelper;
+import com.example.movietimez.HelperClasses.PasswordHasher;
 import com.example.movietimez.Activities.MainActivity;
 import com.example.movietimez.R;
-import com.google.common.hash.HashCode;
-import com.google.common.hash.Hashing;
 
 import java.nio.charset.Charset;
 
@@ -62,18 +61,19 @@ public class ChangePassword extends Fragment {
         userData.moveToFirst();
         String passwordOld = userData.getString(2);
         String oldPasswordTextView = this.mOldPassword.getText().toString();
-        final HashCode hashCodeOldPass = Hashing.sha1().hashString(oldPasswordTextView, Charset.defaultCharset());
-        if(!passwordOld.equals(hashCodeOldPass.toString()))
+        String hashCodeOldPass = PasswordHasher.hash(oldPasswordTextView);
+
+        if(!passwordOld.equals(hashCodeOldPass))
         {
-            Log.d("PROFILE PASSWORD", "******************" + passwordOld + "   " + hashCodeOldPass.toString() + "******************");
+            Log.d("PROFILE PASSWORD", "******************" + passwordOld + "   " + hashCodeOldPass + "******************");
             Toast.makeText(getContext(), "Old password is incorrect!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String newPasswordTextView = this.mNewPassword.getText().toString();
-        final HashCode hashCode = Hashing.sha1().hashString(newPasswordTextView, Charset.defaultCharset());
+        String hashCode = PasswordHasher.hash(newPasswordTextView);
 
-        database.changePassword(Constants.USERNAME, hashCode.toString());
+        database.changePassword(Constants.USERNAME, hashCode);
 
         ((MainActivity)getActivity()).loadProfile();
     }

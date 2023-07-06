@@ -48,22 +48,18 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
                 Fragment selectedFragment = null;
+                int itemId = item.getItemId();
 
-                switch (item.getItemId()) {
-                    case R.id.nav_profile:
-                        selectedFragment = new ProfileFragment();
-                        break;
-                    case R.id.nav_favourites:
-                        selectedFragment = new HomeFragment();
-                        Constants.SELECTED_OPTION = Constants.FAVS;
-                        break;
-                    case R.id.nav_home:
-                        selectedFragment = new HomeFragment();
-                        Constants.SELECTED_OPTION = Constants.HOME;
-                        break;
-                    case R.id.nav_nowplaying:
-                        selectedFragment = new CinemaFragment();
-                        break;
+                if (itemId == R.id.nav_profile) {
+                    selectedFragment = new ProfileFragment();
+                } else if (itemId == R.id.nav_favourites) {
+                    selectedFragment = new HomeFragment();
+                    Constants.SELECTED_OPTION = Constants.FAVS;
+                } else if (itemId == R.id.nav_home) {
+                    selectedFragment = new HomeFragment();
+                    Constants.SELECTED_OPTION = Constants.HOME;
+                } else if (itemId == R.id.nav_nowplaying) {
+                    selectedFragment = new CinemaFragment();
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_place,

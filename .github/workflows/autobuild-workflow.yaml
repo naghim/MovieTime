@@ -1,0 +1,31 @@
+name: Android CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "19"
+          cache: "gradle"
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+      - name: Build APK debug project
+        run: ./gradlew assembleDebug
+      - name: Upload APK debug
+        uses: actions/upload-artifact@v3
+        with:
+          name: Debug APK
+          path: app/build/outputs/apk/debug/

@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.example.movietimez.R;
+
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fm;

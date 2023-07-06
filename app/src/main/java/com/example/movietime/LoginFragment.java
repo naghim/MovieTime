@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.movietimez.R;
+
 public class LoginFragment extends Fragment {
 
     @Override

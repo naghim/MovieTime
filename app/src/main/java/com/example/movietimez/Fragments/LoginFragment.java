@@ -12,10 +12,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.movietimez.HelperClasses.Constants;
 import com.example.movietimez.HelperClasses.DatabaseHelper;
+import com.example.movietimez.HelperClasses.PasswordHasher;
 import com.example.movietimez.Activities.MainActivity;
 import com.example.movietimez.R;
-import com.google.common.hash.HashCode;
-import com.google.common.hash.Hashing;
 
 import java.nio.charset.Charset;
 
@@ -65,14 +64,14 @@ public class LoginFragment extends Fragment {
         String username = mUsernameEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
-        final HashCode hashCode = Hashing.sha1().hashString(password, Charset.defaultCharset());
+        String hashCode = PasswordHasher.hash(password);
 
-        if (!database.userExists(username, hashCode.toString()))
+        if (!database.userExists(username, hashCode))
         {
-            database.saveUser(username, hashCode.toString());
+            database.saveUser(username, hashCode);
         } else
         {
-            if(!database.verifyUserInput(username, hashCode.toString())){
+            if(!database.verifyUserInput(username, hashCode)){
                 Toast.makeText(getContext(), "Invalid login inputs...", Toast.LENGTH_SHORT).show();
                 return;
             }
